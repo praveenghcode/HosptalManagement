@@ -1,0 +1,127 @@
+<app-layout>
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <h1>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                        <circle cx="8.5" cy="7" r="4" />
+                        <line x1="20" y1="8" x2="20" y2="14" />
+                        <line x1="23" y1="11" x2="17" y2="11" />
+                    </svg>
+                    Create Hospital Admin
+                </h1>
+                <p>Assign a new administrator to manage a specific hospital</p>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="alert alert-error" *ngIf="errorMessage">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+            </svg>
+            {{ errorMessage }}
+        </div>
+        <div class="alert alert-success" *ngIf="successMessage">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            {{ successMessage }}
+        </div>
+
+        <!-- Form Card -->
+        <div class="form-card">
+            <form (ngSubmit)="onSubmit()" #adminForm="ngForm">
+
+                <!-- Hospital Selection -->
+                <div class="form-section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                        Select Hospital
+                    </h3>
+                    <p class="section-desc">Choose the hospital this admin will manage</p>
+                </div>
+
+                <div class="hospital-cards" *ngIf="hospitals.length > 0">
+                    @for (hospital of hospitals; track hospital.id) {
+                    <div class="hospital-option" [class.selected]="formData.hospitalId === hospital.id"
+                        (click)="formData.hospitalId = hospital.id">
+                        <div class="hospital-icon">🏥</div>
+                        <div class="hospital-info">
+                            <h4>{{ hospital.name }}</h4>
+                            <p>{{ hospital.address }}</p>
+                            <span class="hospital-email">{{ hospital.email }}</span>
+                        </div>
+                        <div class="check-mark" *ngIf="formData.hospitalId === hospital.id">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                    </div>
+                    }
+                </div>
+                <div class="empty-state" *ngIf="hospitals.length === 0">
+                    <p>No hospitals found. Please create a hospital first.</p>
+                </div>
+
+                <!-- Admin Details -->
+                <div class="form-section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        Admin Details
+                    </h3>
+                    <p class="section-desc">Enter the credentials for the new hospital administrator</p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" [(ngModel)]="formData.name" name="name" required
+                            placeholder="e.g. Dr. Jane Smith">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" [(ngModel)]="formData.email" name="email" required
+                            placeholder="e.g. admin@hospital.com">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" [(ngModel)]="formData.password" name="password" required
+                            minlength="6" placeholder="Minimum 6 characters">
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" routerLink="/dashboard">Cancel</button>
+                    <button type="submit" class="btn-submit" [disabled]="!adminForm.form.valid || loading">
+                        <svg *ngIf="!loading" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="8.5" cy="7" r="4" />
+                            <line x1="20" y1="8" x2="20" y2="14" />
+                            <line x1="23" y1="11" x2="17" y2="11" />
+                        </svg>
+                        <div class="spinner" *ngIf="loading"></div>
+                        {{ loading ? 'Creating...' : 'Create Hospital Admin' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</app-layout>

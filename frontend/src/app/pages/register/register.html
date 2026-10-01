@@ -1,0 +1,131 @@
+<div class="register-container">
+    <div class="register-card">
+        <div class="card-header">
+            <h2>Patient Registration</h2>
+            <p>Create your account to access hospital services</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+            <!-- Hospital Link -->
+            <div class="form-section">
+                <h3>Hospital Identification</h3>
+                <div class="form-group">
+                    <label for="hospitalCode">Hospital Code <span class="required">*</span></label>
+                    <input type="text" id="hospitalCode" formControlName="hospitalCode"
+                        placeholder="Enter the unique 6-digit code (e.g. GCH-1234)"
+                        [class.error]="registerForm.get('hospitalCode')?.invalid && registerForm.get('hospitalCode')?.touched">
+                    <small class="hint">Your hospital provides this code.</small>
+                    <div class="error-msg"
+                        *ngIf="registerForm.get('hospitalCode')?.errors?.['required'] && registerForm.get('hospitalCode')?.touched">
+                        Hospital code is required
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h3>Personal Details</h3>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" formControlName="name" placeholder="John Doe"
+                            [class.error]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+                    </div>
+                    <div class="form-group half">
+                        <label for="dob">Date of Birth <span class="required">*</span></label>
+                        <input type="date" id="dob" formControlName="dateOfBirth"
+                            [class.error]="registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="gender">Gender <span class="required">*</span></label>
+                        <select id="gender" formControlName="gender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group half">
+                        <label for="bloodGroup">Blood Group <span class="required">*</span></label>
+                        <select id="bloodGroup" formControlName="bloodGroup">
+                            <option value="">Select Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="form-section">
+                <h3>Contact Information</h3>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" formControlName="email" placeholder="john@example.com"
+                            [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                    </div>
+                    <div class="form-group half">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" formControlName="contactNumber" placeholder="+1 234 567 8900"
+                            [class.error]="registerForm.get('contactNumber')?.invalid && registerForm.get('contactNumber')?.touched">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address <span class="required">*</span></label>
+                    <textarea id="address" formControlName="address" rows="2"
+                        placeholder="Street, City, Zip Code"></textarea>
+                </div>
+            </div>
+
+            <!-- Security -->
+            <div class="form-section">
+                <h3>Security</h3>
+                <div class="form-group">
+                    <label for="password">Password <span class="required">*</span></label>
+                    <input type="password" id="password" formControlName="password" placeholder="Min. 6 characters"
+                        [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                </div>
+            </div>
+
+            <!-- Medical History (Optional) -->
+            <div class="form-section">
+                <h3>Medical History (Optional)</h3>
+                <div class="form-group">
+                    <label for="history">Brief Medical History</label>
+                    <textarea id="history" formControlName="medicalHistory" rows="2"
+                        placeholder="Allergies, chronic conditions, etc."></textarea>
+                </div>
+            </div>
+
+            <div class="error-banner" *ngIf="error">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                {{ error }}
+            </div>
+
+            <button type="submit" [disabled]="registerForm.invalid || loading" class="submit-btn"
+                [class.loading]="loading">
+                <span *ngIf="!loading">Create Account</span>
+                <span *ngIf="loading" class="spinner"></span>
+            </button>
+
+            <div class="footer-links">
+                <p>Already have an account? <a routerLink="/login">Sign In</a></p>
+            </div>
+        </form>
+    </div>
+</div>

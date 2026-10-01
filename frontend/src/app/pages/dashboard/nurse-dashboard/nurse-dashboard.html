@@ -1,0 +1,97 @@
+<app-layout>
+    <div class="dashboard-page">
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <h1>Hello, {{ user?.name }}! 👩‍⚕️</h1>
+                <p>Manage patient care and ward assignments.</p>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card stat-patients">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                    </svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Assigned Patients</span>
+                    <span class="stat-value">{{ assignedPatients.length }}</span>
+                    <span class="stat-trend">Ward A & B</span>
+                </div>
+            </div>
+
+            <div class="stat-card stat-appointments">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Pending Vitals</span>
+                    <span class="stat-value">3</span>
+                    <span class="stat-trend" style="color: var(--warning-600);">Due within 1 hour</span>
+                </div>
+            </div>
+
+            <div class="stat-card stat-doctors">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                        <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Tasks Completed</span>
+                    <span class="stat-value">18</span>
+                    <span class="stat-trend trend-up">Today</span>
+                </div>
+            </div>
+
+            <div class="stat-card stat-revenue">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Shift Ends</span>
+                    <span class="stat-value">6:00 PM</span>
+                    <span class="stat-trend">4 hours remaining</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Assignments -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Assigned Patients</h2>
+                <button class="btn-text">View All Wards</button>
+            </div>
+            <div class="patient-grid">
+                @for (patient of assignedPatients; track patient.id) {
+                <div class="patient-card" [ngClass]="getPriorityClass(patient.priority)">
+                    <div class="pc-header">
+                        <div class="pc-avatar">{{ patient.name.charAt(0) }}</div>
+                        <span class="pc-priority" [ngClass]="getPriorityClass(patient.priority)">{{ patient.priority
+                            }}</span>
+                    </div>
+                    <h4>{{ patient.name }}</h4>
+                    <div class="pc-info">
+                        <span>{{ patient.room }}</span>
+                        <span>·</span>
+                        <span>{{ patient.ward }}</span>
+                    </div>
+                    <div class="pc-vitals" [class.vitals-due]="patient.vitals === 'Due'">
+                        {{ patient.vitals === 'Due' ? '⚠️ Vitals Due' : '✅ Vitals Done' }}
+                    </div>
+                    <button class="btn-outline-sm">Record Vitals</button>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</app-layout>

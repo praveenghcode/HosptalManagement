@@ -1,0 +1,105 @@
+<app-layout>
+    <div class="dashboard-page">
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <h1>Hello, {{ user?.name }}! 💙</h1>
+                <p>Track your health journey and upcoming appointments.</p>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card stat-appointments">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Next Appointment</span>
+                    <span class="stat-value">Tomorrow</span>
+                    <span class="stat-trend">10:00 AM with Dr. Smith</span>
+                </div>
+            </div>
+
+            <div class="stat-card stat-patients">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+                    </svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Active Prescriptions</span>
+                    <span class="stat-value">{{ prescriptions.length }}</span>
+                    <span class="stat-trend">All up to date</span>
+                </div>
+            </div>
+
+            <div class="stat-card stat-doctors">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                </div>
+                <div class="stat-details">
+                    <span class="stat-label">Health Score</span>
+                    <span class="stat-value">92%</span>
+                    <span class="stat-trend trend-up">Improving</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Upcoming Appointments -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Upcoming Appointments</h2>
+                    <button class="btn-primary-sm">Book New</button>
+                </div>
+                <div class="appointment-list">
+                    @for (apt of upcomingAppointments; track apt.id) {
+                    <div class="appointment-card">
+                        <div class="apt-left">
+                            <div class="apt-date-badge">
+                                <span class="apt-day">{{ apt.date }}</span>
+                                <span class="apt-time">{{ apt.time }}</span>
+                            </div>
+                        </div>
+                        <div class="apt-details">
+                            <h4>{{ apt.doctor }}</h4>
+                            <p>{{ apt.specialty }}</p>
+                        </div>
+                        <span class="status-pill" [class.confirmed]="apt.status === 'confirmed'"
+                            [class.pending]="apt.status === 'pending'">
+                            {{ apt.status }}
+                        </span>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Prescriptions -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>My Prescriptions</h2>
+                </div>
+                <div class="prescription-list">
+                    @for (rx of prescriptions; track rx.id) {
+                    <div class="prescription-card">
+                        <div class="rx-icon">💊</div>
+                        <div class="rx-details">
+                            <h4>{{ rx.name }}</h4>
+                            <p>{{ rx.dosage }} · {{ rx.remaining }} remaining</p>
+                            <span class="rx-doctor">Prescribed by {{ rx.doctor }}</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</app-layout>

@@ -1,0 +1,162 @@
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .header-content {
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0;
+        }
+
+        p {
+            color: #6b7280;
+            margin: 0.25rem 0 0;
+        }
+    }
+
+    .add-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: #1d4ed8;
+        }
+    }
+}
+
+.doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.doctor-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background-color: #dbeafe;
+            color: #2563eb;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+
+            &.active {
+                background-color: #d1fae5;
+                color: #059669;
+            }
+
+            &.on-leave {
+                background-color: #fee2e2;
+                color: #dc2626;
+            }
+        }
+    }
+
+    .card-body {
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0 0 0.25rem;
+        }
+
+        .specialization {
+            color: #2563eb;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+
+            .detail-item {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.875rem;
+
+                .label {
+                    color: #6b7280;
+                }
+
+                .value {
+                    color: #374151;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    .card-footer {
+        border-top: 1px solid #f3f4f6;
+        padding-top: 1rem;
+
+        .action-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            color: #374151;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: #f9fafb;
+                border-color: #d1d5db;
+                color: #111827;
+            }
+        }
+    }
+}
+
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: #6b7280;
+}

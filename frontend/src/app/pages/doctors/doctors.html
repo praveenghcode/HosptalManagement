@@ -1,0 +1,51 @@
+<app-layout>
+    <div class="page-header">
+        <div class="header-content">
+            <h1>Doctors</h1>
+            <p>Manage your medical staff</p>
+        </div>
+        <button class="add-btn">
+            <span>+</span> Add Doctor
+        </button>
+    </div>
+
+    <div class="doctors-grid">
+        <div class="doctor-card" *ngFor="let doctor of doctors">
+            <div class="card-header">
+                <div class="avatar">{{ doctor.name.charAt(4) }}</div>
+                <div class="status" [class]="doctor.status.toLowerCase().replace(' ', '-')">
+                    {{ doctor.status }}
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h3>{{ doctor.name }}</h3>
+                <p class="specialization">{{ doctor.specialization }}</p>
+
+                <div class="details">
+                    <div class="detail-item">
+                        <span class="label">Department</span>
+                        <span class="value">{{ doctor.department }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Hospital</span>
+                        <span class="value">{{ doctor.hospital }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Experience</span>
+                        <span class="value">{{ doctor.experience }} Years</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="action-btn view">View Profile</button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading" class="loading-state">
+            <p>Loading doctors...</p>
+        </div>
+    </div>
+</app-layout>
